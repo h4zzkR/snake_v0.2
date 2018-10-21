@@ -74,30 +74,6 @@ class Snake():
                     self.game_over()
                     break
 
-    def event(self):
-        move = ""
-        for event in pygame.event.get():
-            if event.type == pygame.KEYDOWN:
-                if event.type == pygame.QUIT:
-                   pygame.quit()
-                   sys.exit(0)
-                elif event.key == 100:
-                    move = "RIGHT"
-                elif event.key == 97:
-                    move = "LEFT"
-                elif event.key == 119:
-                    move = "UP"
-                elif event.key == 115:
-                    move = "DOWN"
-                elif event.key == 27:
-                    print(event.key)
-                    time.sleep(3)
-        self.move = move
-
-    def render(self):
-        self.fps.tick(28)
-        pygame.display.flip()
-
     def draw_food(self):
         pygame.draw.rect(self.screen, self.get_color(), pygame.Rect(self.food_pos[0], self.food_pos[1], 10, 10))
         #draw KWADRATIC!!!
@@ -118,8 +94,33 @@ snake = Snake()
 snake.__set__()
 
 
+def event():
+    move = ""
+    for event in pygame.event.get():
+        if event.type == pygame.KEYDOWN:
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit(0)
+            elif event.key == 100:
+                move = "RIGHT"
+            elif event.key == 97:
+                move = "LEFT"
+            elif event.key == 119:
+                move = "UP"
+            elif event.key == 115:
+                move = "DOWN"
+            elif event.key == 27:
+                print(event.key)
+                time.sleep(3)
+    snake.move = move
+
+
+def render():
+    snake.fps.tick(28)
+    pygame.display.flip()
+
 while True:
-    snake.event()
+    event()
     snake.sort_direction()
     snake.change_position()
     snake.snake_move()
@@ -127,6 +128,6 @@ while True:
     snake.draw_food()
     snake.logic()
     #is our snake alive
-    snake.render()
+    render()
 
 #TODO make more food, not one, snake is hungry
